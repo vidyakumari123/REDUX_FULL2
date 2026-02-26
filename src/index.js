@@ -3,20 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { accountReducer } from './reducers/account';
-import { bonusReducer } from './reducers/bonus';
-import logger from 'redux-logger';
-import {thunk} from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import accountReducer from './slices/accountSlice';
+import bonusReducer from './slices/bonusSlice';
 import { Provider } from 'react-redux';
+import rewardReducer from './reducers/reward';
 
-const store = createStore(
-  combineReducers({
+const store = configureStore({
+  reducer: {
     account: accountReducer,
     bonus: bonusReducer,
-  }),
-  applyMiddleware(logger, thunk)
-);
+    reward: rewardReducer
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,5 +29,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
 reportWebVitals();
